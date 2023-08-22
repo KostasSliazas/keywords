@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="">
+
+<head>
+  <meta charset="utf-8">
+  <title>List keywords control</title>
+  <style>
+    body {
+      font: 16px/1.5 monospace;
+      max-width: 900px;
+      margin: 3em auto;
+      background: #eee;
+    }
+    button:nth-child(odd),div:nth-child(odd){margin: 1em 0;}
+    .ms {
+      box-sizing: border-box;
+      padding: 1em;
+      background: #fafafa;
+      border: 1px solid #aaa;
+      overflow: hidden;
+      width: max-content;
+      margin: 0 auto !important;
+    }
+
+    #outputs {
+      word-wrap: anywhere;
+      overflow: hidden;
+      line-break: anywhere;
+      min-height: 7em;
+      background: #fff;
+      border: 1px solid #aaa;
+    }
+
+    #seper {
+      width: 3ch;
+    }
+
+    button {
+      padding: .25em 1em;
+      cursor: pointer;
+    }
+
+    .txt-shadow {
+      text-shadow: rgb(222, 221, 218) -1px -1px 0px, rgb(222, 221, 218) -2px -2px 0px, rgb(222, 221, 218) -3px -3px 0px, rgb(222, 221, 218) -4px -4px 0px, rgb(222, 221, 218) -5px -5px 0px, rgb(222, 221, 218) -6px -6px 0px, rgb(222, 221, 218) -7px -7px 0px, rgb(222, 221, 218) -8px -8px 0px, rgb(222, 221, 218) -9px -9px 0px, rgb(222, 221, 218) -10px -10px 0px, rgb(222, 221, 218) -11px -11px 0px, rgb(222, 221, 218) -12px -12px 0px, rgb(222, 221, 218) -13px -13px 0px, rgb(222, 221, 218) -14px -14px 0px, rgb(222, 221, 218) -15px -15px 0px, rgb(222, 221, 218) -16px -16px 0px, rgb(222, 221, 218) -17px -17px 0px, rgb(222, 221, 218) -18px -18px 0px, rgb(222, 221, 218) -19px -19px 0px, rgb(222, 221, 218) -20px -20px 0px, rgb(222, 221, 218) -21px -21px 0px, rgb(222, 221, 218) -22px -22px 0px, rgb(222, 221, 218) -23px -23px 0px, rgb(222, 221, 218) -24px -24px 0px, rgb(222, 221, 218) -25px -25px 0px, rgb(222, 221, 218) -26px -26px 0px, rgb(222, 221, 218) -27px -27px 0px, rgb(222, 221, 218) -28px -28px 0px, rgb(222, 221, 218) -29px -29px 0px, rgb(222, 221, 218) -30px -30px 0px, rgb(222, 221, 218) -31px -31px 0px, rgb(222, 221, 218) -32px -32px 0px, rgb(222, 221, 218) -33px -33px 0px, rgb(222, 221, 218) -34px -34px 0px, rgb(222, 221, 218) -35px -35px 0px, rgb(222, 221, 218) -36px -36px 0px, rgb(222, 221, 218) -37px -37px 0px, rgb(222, 221, 218) -38px -38px 0px, rgb(222, 221, 218) -39px -39px 0px, rgb(222, 221, 218) -40px -40px 0px, rgb(222, 221, 218) -41px -41px 0px, rgb(222, 221, 218) -42px -42px 0px, rgb(222, 221, 218) -43px -43px 0px, rgb(222, 221, 218) -44px -44px 0px, rgb(222, 221, 218) -45px -45px 0px, rgb(222, 221, 218) -46px -46px 0px, rgb(222, 221, 218) -47px -47px 0px, rgb(222, 221, 218) -48px -48px 0px;
+      color: #9a9996;
+    }
+    p {
+      margin: 0 0 1.5em
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      font-size: 1.5em;
+      line-height: 1em;
+      margin: 0
+    }
+
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+      font-size: 1.375em;
+      line-height: 1.0909em;
+      margin-top: 1.0909em
+    }
+
+    h3,
+    h4,
+    h5,
+    h6 {
+      font-size: 1.25em;
+      line-height: 1.2em;
+      margin-top: 1.2em
+    }
+
+    h4,
+    h5,
+    h6 {
+      font-size: 1.125em;
+      line-height: 1.3333em;
+      margin-top: 1.3333em
+    }
+
+    h5,
+    h6,
+    p {
+      font-size: 1em;
+      line-height: 1.5em
+    }
+
+    h5,
+    h6 {
+      margin-top: 1.5em
+    }
+
+    h6 {
+      font-size: .875em;
+      line-height: 1.7143em;
+      margin-top: 1.7143em;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+  <header></header>
+  <main>
+
+    <div class="ms">
+      <div class="ms">
+        <h1 class="txt-shadow">Keywords randomize or sorting tool</h1>
+      </div>
+      <div>
+        <label for="input">List</label>
+        <input id="input" type="text" value="TEXT1, TEXT2, TEXT3, TEXT4, TEXT5, TEXT6, TEXT7">
+        <label for="seper">Seperator</label>
+        <input id="seper" type="text" size="3" value=",">
+        <label for="linebreak">Line break</label>
+        <input id="linebreak" type="checkbox" checked>
+      </div>
+      <div>
+        <button id="shuffle">shuffle</button>
+        <button id="sorts">sort</button>
+        <button id="lower-case">lowercase</button>
+        <button id="upper-case">uppercase</button>
+        <button id="case">capitalize</button>
+      </div>
+      <p id="outputs"></p>
+    </div>
+  </main>
+  <footer>
+    <h6>sometimes we just need tools that sometimes work</h6>
+  </footer>
+  <script>
+    const inputs = document.getElementById('input')
+    const outputs = document.getElementById('outputs')
+    const shuffle = document.getElementById('shuffle')
+    const seper = document.getElementById('seper')
+    const linebreak = document.getElementById('linebreak')
+    const sorts = document.getElementById('sorts')
+    const tolowercase = document.getElementById('lower-case')
+    const toupercase = document.getElementById('upper-case')
+    const capitalize = document.getElementById('case')
+    const clear = e => e.target.value = ''
+    const arr = () => inputs.value.split(/[ ,]+/).filter(Boolean).map(item => item.trim())
+    const output = v => outputs.innerHTML = v
+    const spLineBreak = (seper) => (seper.value + (linebreak.checked ? '<br>' : ''))
+    const changed = () => arr().sort(() => Math.random() - 0.5).join(spLineBreak(seper))
+    const sorted = () => arr().sort((a, b) => a.localeCompare(b)).join(spLineBreak(seper))
+    const lowerCase = () => arr().join(spLineBreak(seper)).toLowerCase()
+    const uperCase = () => arr().join(spLineBreak(seper)).toUpperCase()
+
+    const capitalizeCases = () => {
+      const array = arr().join(spLineBreak(seper)).toLowerCase().split(spLineBreak(seper))
+      for (var i = 0; i < array.length; i++) array[i] = array[i].charAt(0).toUpperCase() + array[i].slice(1)
+      return array.join(spLineBreak(seper))
+    }
+
+    inputs.addEventListener('input', () => output(changed()))
+    shuffle.addEventListener('click', () => output(changed()))
+    sorts.addEventListener('click', () => output(sorted()))
+    tolowercase.addEventListener('click', () => output(lowerCase()))
+    toupercase.addEventListener('click', () => output(uperCase()))
+    capitalize.addEventListener('click', () => output(capitalizeCases()))
+
+    Array.from([seper, inputs]).forEach(function (elem) {
+      elem.addEventListener('dblclick', clear)
+    })
+    output(changed())
+  </script>
+</body>
+
+</html>

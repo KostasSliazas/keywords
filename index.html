@@ -18,17 +18,17 @@
       margin: 3em auto;
       background: #eee;
     }
-    button:nth-child(odd),div:nth-child(odd){margin: 1em 0;}
+    button:nth-child(odd),div:nth-child(odd){margin: .3em 0}
     .ms {
       box-sizing: border-box;
       padding: 1em;
       background: #fafafa;
       border: 1px solid #aaa;
       overflow: hidden;
-      width: max-content;
       margin: 0 auto !important;
     }
-
+    .fl{display: flex;}
+    .wi{width:100%}
     #outputs {
       word-wrap: anywhere;
       overflow: hidden;
@@ -36,6 +36,9 @@
       min-height: 7em;
       background: #fff;
       border: 1px solid #aaa;
+      max-height: 16em;
+      overflow: hidden;
+      overflow-y: scroll;
     }
 
     #seper {
@@ -122,9 +125,11 @@
       <div class="ms">
         <h1 class="txt-shadow">Keywords randomize or sorting tool</h1>
       </div>
-      <div>
+      <div class="fl">
         <label for="input">List</label>
-        <input id="input" type="text" value="TEXT1, TEXT2, TEXT3, TEXT4, TEXT5, TEXT6, TEXT7">
+        <input id="input" class="wi" type="text" value="TEXT1, TEXT2, TEXT3, TEXT4, TEXT5, TEXT6, TEXT7">
+      </div>
+      <div>
         <label for="seper">Seperator</label>
         <input id="seper" type="text" size="3" value=",">
         <label for="linebreak">Line break</label>
@@ -137,6 +142,7 @@
         <button id="upper-case">uppercase</button>
         <button id="case">capitalize</button>
       </div>
+      <div>Keywords:&nbsp;<span id="statsw">0</span>&nbsp;&nbsp;Letters:&nbsp;<span id="statsl">0</span></div>
       <p id="outputs"></p>
     </div>
   </main>
@@ -144,6 +150,7 @@
     <h6>Keywords 2023</h6>
   </footer>
   <script>
+    let arrays = []
     const inputs = document.getElementById('input')
     const outputs = document.getElementById('outputs')
     const shuffle = document.getElementById('shuffle')
@@ -153,30 +160,28 @@
     const tolowercase = document.getElementById('lower-case')
     const toupercase = document.getElementById('upper-case')
     const capitalize = document.getElementById('case')
+    const statisticsW = document.getElementById('statsw')
+    const statisticsL = document.getElementById('statsl')
+    const showStatsWords = ()=> statisticsW.innerHTML = arrays.length
+    const showStatsLetters = ()=> statisticsL.innerHTML = arrays.join('').length
     const clear = e => e.target.value = ''
-    const arr = () => inputs.value.split(/[^\n[a-zA-Z0-9]+| ,]+/).filter(Boolean).map(item => item.trim())
+    const arr = () => arrays = inputs.value.split(/[^\n[a-zA-Z0-9]+| ,]+/).filter(Boolean).map(item => item.trim())
     const output = v => outputs.innerHTML = v
     const spLineBreak = (seper) => (seper.value + (linebreak.checked ? '<br>' : ''))
-    const changed = () => arr().sort(() => Math.random() - 0.5).join(spLineBreak(seper))
-    const sorted = () => arr().sort((a, b) => a.localeCompare(b)).join(spLineBreak(seper))
-    const lowerCase = () => arr().join(spLineBreak(seper)).toLowerCase()
-    const uperCase = () => arr().join(spLineBreak(seper)).toUpperCase()
+    const changed = () => arrays.sort(() => Math.random() - 0.5).join(spLineBreak(seper))
+    const sorted = () => arrays.sort((a, b) => a.localeCompare(b)).join(spLineBreak(seper))
+    const lowerCase = () => arrays.join(spLineBreak(seper)).toLowerCase()
+    const uperCase = () => arrays.join(spLineBreak(seper)).toUpperCase()
+    const capitalizeCases = () => arrays.join(spLineBreak(seper)).toLowerCase().split(spLineBreak(seper)).map(e=>e.charAt(0).toUpperCase() + e.slice(1)).join(spLineBreak(seper))
 
-    const capitalizeCases = () => {
-      const array = arr().join(spLineBreak(seper)).toLowerCase().split(spLineBreak(seper))
-      for (var i = 0; i < array.length; i++) array[i] = array[i].charAt(0).toUpperCase() + array[i].slice(1)
-      return array.join(spLineBreak(seper))
-    }
-
-    inputs.addEventListener('input', () => output(changed()))
+    inputs.addEventListener('input', () => output(arr() ,showStatsWords(),showStatsLetters()))
     shuffle.addEventListener('click', () => output(changed()))
     sorts.addEventListener('click', () => output(sorted()))
     tolowercase.addEventListener('click', () => output(lowerCase()))
     toupercase.addEventListener('click', () => output(uperCase()))
     capitalize.addEventListener('click', () => output(capitalizeCases()))
-
     Array.from([seper, inputs]).forEach(elem => elem.addEventListener('dblclick', clear))
-    output(changed())
+    output(arr(),showStatsWords(),showStatsLetters())
   </script>
 </body>
 

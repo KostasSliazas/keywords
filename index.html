@@ -162,26 +162,40 @@
     const capitalize = document.getElementById('case')
     const statisticsW = document.getElementById('statsw')
     const statisticsL = document.getElementById('statsl')
-    const showStatsWords = ()=> statisticsW.innerHTML = arrays.length
-    const showStatsLetters = ()=> statisticsL.innerHTML = arrays.join('').length
-    const clear = e => e.target.value = ''
-    const arr = () => arrays = inputs.value.split(/[^\n[a-zA-Z0-9]+| ,]+/).filter(Boolean).map(item => item.trim())
-    const output = v => outputs.innerHTML = v
-    const spLineBreak = (seper) => (seper.value + (linebreak.checked ? '<br>' : ''))
-    const changed = () => arrays.sort(() => Math.random() - 0.5).join(spLineBreak(seper))
-    const sorted = () => arrays.sort((a, b) => a.localeCompare(b)).join(spLineBreak(seper))
-    const lowerCase = () => arrays.join(spLineBreak(seper)).toLowerCase()
-    const uperCase = () => arrays.join(spLineBreak(seper)).toUpperCase()
-    const capitalizeCases = () => arrays.join(spLineBreak(seper)).toLowerCase().split(spLineBreak(seper)).map(e=>e.charAt(0).toUpperCase() + e.slice(1)).join(spLineBreak(seper))
 
-    inputs.addEventListener('input', () => output(arr() ,showStatsWords(),showStatsLetters()))
-    shuffle.addEventListener('click', () => output(changed()))
+    // set array output filter with regex and trim
+    const inputArray = () => arrays = inputs.value.split(/[^\n[a-zA-Z0-9]+| ,]+/).filter(Boolean).map(item => item.trim())
+    // output statistic array length
+    const showStatsWords = ()=> statisticsW.innerHTML = arrays.length
+    // output statistic array letter length
+    const showStatsLetters = ()=> statisticsL.innerHTML = arrays.join('').length
+    // clear inputs on dblclick event
+    const clear = e => e.target.value = ''
+    //outputs whole string
+    const output = v => outputs.innerHTML = v.join(spLineBreak(seper))
+    //add linebreak? AND seperations simbols
+    const spLineBreak = () => seper.value + (linebreak.checked ? '<br>' : '')
+    //sort array randomly (rewrite arrays)
+    const shuffled = () => arrays = arrays.sort(() => Math.random() - 0.5)
+    //sort array normal (rewrite arrays)
+    const sorted = () => arrays = arrays.sort((a, b) => a.localeCompare(b))
+    //(array)words to lower case (rewrite arrays)
+    const lowerCase = () => arrays = arrays.map(e=>e.toLowerCase())
+    //(array)words to upper case (rewrite arrays)
+    const uperCase = () => arrays = arrays.map(e=>e.toUpperCase())
+    //(array)words capitalize (rewrite arrays)
+    const capitalizeCases = () => arrays = arrays.map(e=>{let z = e.toLowerCase(); z = z[0].charAt(0).toUpperCase() + z.slice(1);return z})
+
+    inputs.addEventListener('input', () => output(inputArray() ,showStatsWords(),showStatsLetters()))
+    shuffle.addEventListener('click', () => output(shuffled()))
     sorts.addEventListener('click', () => output(sorted()))
     tolowercase.addEventListener('click', () => output(lowerCase()))
     toupercase.addEventListener('click', () => output(uperCase()))
     capitalize.addEventListener('click', () => output(capitalizeCases()))
+    output(inputArray(),showStatsWords(),showStatsLetters())
+
+    // multiple dblclick event bind to input elements for clearing them
     Array.from([seper, inputs]).forEach(elem => elem.addEventListener('dblclick', clear))
-    output(arr(),showStatsWords(),showStatsLetters())
   </script>
 </body>
 

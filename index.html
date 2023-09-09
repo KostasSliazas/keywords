@@ -165,7 +165,7 @@
     const statisticsL = document.getElementById('statsl')
 
     // set array output filter with regex and trim
-    const inputArray = () => arrays = inputs.value.split(/[^\n[a-zA-Z0-9]+| ,]+/).filter(Boolean).map(item => item.trim())
+    const inputArray = () => arrays = [...new Set(inputs.value.split(/[^\n[a-zA-Z0-9]+| ,]+/).filter(Boolean).map(item => item.trim()))]
     // output statistic array length
     const showStatsWords = ()=> statisticsW.innerHTML = arrays.length
     // output statistic array letter length

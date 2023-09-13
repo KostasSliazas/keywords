@@ -45,11 +45,8 @@
     #seper {
       width: 3ch;
     }
-
-    button {
-      padding: .25em 1em;
-      cursor: pointer;
-    }
+    button, input[type=checkbox]{cursor: pointer;}
+    button {padding: .25em 1em;}
 
     .txt-shadow {
       text-shadow: rgb(222, 221, 218) -1px -1px 0px, rgb(222, 221, 218) -2px -2px 0px, rgb(222, 221, 218) -3px -3px 0px, rgb(222, 221, 218) -4px -4px 0px, rgb(222, 221, 218) -5px -5px 0px, rgb(222, 221, 218) -6px -6px 0px, rgb(222, 221, 218) -7px -7px 0px, rgb(222, 221, 218) -8px -8px 0px, rgb(222, 221, 218) -9px -9px 0px, rgb(222, 221, 218) -10px -10px 0px, rgb(222, 221, 218) -11px -11px 0px, rgb(222, 221, 218) -12px -12px 0px, rgb(222, 221, 218) -13px -13px 0px, rgb(222, 221, 218) -14px -14px 0px, rgb(222, 221, 218) -15px -15px 0px, rgb(222, 221, 218) -16px -16px 0px, rgb(222, 221, 218) -17px -17px 0px, rgb(222, 221, 218) -18px -18px 0px, rgb(222, 221, 218) -19px -19px 0px, rgb(222, 221, 218) -20px -20px 0px, rgb(222, 221, 218) -21px -21px 0px, rgb(222, 221, 218) -22px -22px 0px, rgb(222, 221, 218) -23px -23px 0px, rgb(222, 221, 218) -24px -24px 0px, rgb(222, 221, 218) -25px -25px 0px, rgb(222, 221, 218) -26px -26px 0px, rgb(222, 221, 218) -27px -27px 0px, rgb(222, 221, 218) -28px -28px 0px, rgb(222, 221, 218) -29px -29px 0px, rgb(222, 221, 218) -30px -30px 0px, rgb(222, 221, 218) -31px -31px 0px, rgb(222, 221, 218) -32px -32px 0px, rgb(222, 221, 218) -33px -33px 0px, rgb(222, 221, 218) -34px -34px 0px, rgb(222, 221, 218) -35px -35px 0px, rgb(222, 221, 218) -36px -36px 0px, rgb(222, 221, 218) -37px -37px 0px, rgb(222, 221, 218) -38px -38px 0px, rgb(222, 221, 218) -39px -39px 0px, rgb(222, 221, 218) -40px -40px 0px, rgb(222, 221, 218) -41px -41px 0px, rgb(222, 221, 218) -42px -42px 0px, rgb(222, 221, 218) -43px -43px 0px, rgb(222, 221, 218) -44px -44px 0px, rgb(222, 221, 218) -45px -45px 0px, rgb(222, 221, 218) -46px -46px 0px, rgb(222, 221, 218) -47px -47px 0px, rgb(222, 221, 218) -48px -48px 0px;
@@ -139,6 +136,7 @@
       <div>
         <button id="shuffle">shuffle</button>
         <button id="sorts">sort</button>
+        <button id="sorts-length">sort by lenght</button>
         <button id="lower-case">lowercase</button>
         <button id="upper-case">uppercase</button>
         <button id="case">capitalize</button>
@@ -163,7 +161,11 @@
     const capitalize = document.getElementById('case')
     const statisticsW = document.getElementById('statsw')
     const statisticsL = document.getElementById('statsl')
-
+    const sortsLength = document.getElementById('sorts-length')
+    // global toggle value
+    let toggleBolean = false
+    // global toggle value changer
+    const changed = () => toggleBolean =! toggleBolean
     // set array output filter with regex and trim
     const inputArray = () => arrays = [...new Set(inputs.value.split(/[^\n[a-zA-Z0-9]+| ,]+/).filter(Boolean).map(item => item.trim()))]
     // output statistic array length
@@ -171,7 +173,7 @@
     // output statistic array letter length
     const showStatsLetters = ()=> statisticsL.innerHTML = arrays.join('').length
     // clear inputs on dblclick event
-    const clear = e => e.target.value = ''
+    const clear = e => {e.target.value = '';outputs.innerHTML = ''}
     //outputs whole string
     const output = v => outputs.innerHTML = v.join(spLineBreak(seper))
     //add linebreak? AND seperations simbols
@@ -179,7 +181,9 @@
     //sort array randomly (rewrite arrays)
     const shuffled = () => arrays = arrays.sort(() => Math.random() - 0.5)
     //sort array normal (rewrite arrays)
-    const sorted = () => arrays = arrays.sort((a, b) => a.localeCompare(b))
+    const sorted = () => arrays = arrays.sort((a, b) => toggleBolean ? a.localeCompare(b): b.localeCompare(a))
+    //sort array by length (rewrite arrays)
+    const sortLenght = () => arrays = arrays.sort((a, b) => toggleBolean ? a.length - b.length : b.length - a.length)
     //(array)words to lower case (rewrite arrays)
     const lowerCase = () => arrays = arrays.map(e=>e.toLowerCase())
     //(array)words to upper case (rewrite arrays)
@@ -189,12 +193,13 @@
 
     inputs.addEventListener('input', () => output(inputArray() ,showStatsWords(),showStatsLetters()))
     shuffle.addEventListener('click', () => output(shuffled()))
-    sorts.addEventListener('click', () => output(sorted()))
+    sorts.addEventListener('click', () => output(sorted(changed())))
+    sortsLength.addEventListener('click', () => output(sortLenght(changed())))
     tolowercase.addEventListener('click', () => output(lowerCase()))
     toupercase.addEventListener('click', () => output(uperCase()))
     capitalize.addEventListener('click', () => output(capitalizeCases()))
-    output(inputArray(),showStatsWords(),showStatsLetters())
-
+    linebreak.addEventListener('click', () => output(inputArray() ,showStatsWords(),showStatsLetters()))
+    output(lowerCase(inputArray()),showStatsWords(),showStatsLetters())
     // multiple dblclick event bind to input elements for clearing them
     Array.from([seper, inputs]).forEach(elem => elem.addEventListener('dblclick', clear))
   </script>

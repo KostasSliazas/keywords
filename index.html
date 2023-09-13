@@ -134,12 +134,12 @@
         <input id="linebreak" type="checkbox" checked>
       </div>
       <div>
-        <button id="shuffle">shuffle</button>
         <button id="sorts">sort</button>
-        <button id="sorts-length">sort by lenght</button>
+        <button id="sorts-length">lenght-sort</button>
         <button id="lower-case">lowercase</button>
         <button id="upper-case">uppercase</button>
         <button id="case">capitalize</button>
+        <button id="shuffle">shuffle</button>
       </div>
       <div>Keywords:&nbsp;<span id="statsw">0</span>&nbsp;&nbsp;Letters:&nbsp;<span id="statsl">0</span></div>
       <p id="outputs"></p>
@@ -149,6 +149,7 @@
     <h6>Keywords 2023</h6>
   </footer>
   <script>
+    'use strict'
     let arrays = []
     const inputs = document.getElementById('input')
     const outputs = document.getElementById('outputs')
@@ -163,9 +164,10 @@
     const statisticsL = document.getElementById('statsl')
     const sortsLength = document.getElementById('sorts-length')
     // global toggle value
-    let toggleBolean = false
+    let toggleBolean = true
     // global toggle value changer
-    const changed = () => toggleBolean =! toggleBolean
+    const changed = e => {if(e.target) toggleBolean =! toggleBolean; e = e.target || e
+    e.innerHTML = (toggleBolean?'(a-b)':'(b-a)') + ' '+e.innerHTML.split(" ").pop()}
     // set array output filter with regex and trim
     const inputArray = () => arrays = [...new Set(inputs.value.split(/[^\n[a-zA-Z0-9]+| ,]+/).filter(Boolean).map(item => item.trim()))]
     // output statistic array length
@@ -193,13 +195,13 @@
 
     inputs.addEventListener('input', () => output(inputArray() ,showStatsWords(),showStatsLetters()))
     shuffle.addEventListener('click', () => output(shuffled()))
-    sorts.addEventListener('click', () => output(sorted(changed())))
-    sortsLength.addEventListener('click', () => output(sortLenght(changed())))
+    sorts.addEventListener('click', e => output(sorted(changed(e))))
+    sortsLength.addEventListener('click', e => output(sortLenght(changed(e))))
     tolowercase.addEventListener('click', () => output(lowerCase()))
     toupercase.addEventListener('click', () => output(uperCase()))
     capitalize.addEventListener('click', () => output(capitalizeCases()))
     linebreak.addEventListener('click', () => output(inputArray() ,showStatsWords(),showStatsLetters()))
-    output(lowerCase(inputArray()),showStatsWords(),showStatsLetters())
+    output(lowerCase(inputArray()),showStatsWords(),showStatsLetters(),sorted(changed(sorts),sortLenght(changed(sortsLength))))
     // multiple dblclick event bind to input elements for clearing them
     Array.from([seper, inputs]).forEach(elem => elem.addEventListener('dblclick', clear))
   </script>

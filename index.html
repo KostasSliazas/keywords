@@ -170,8 +170,8 @@
         <input id="linebreak" type="checkbox" checked>
       </div>
       <div>
-        <button id="sorts">sort</button>
-        <button id="sorts-length">lenght-sort</button>
+        <button id="sorts">(a-b) sort</button>
+        <button id="sorts-length">(a-b) lenght-sort</button>
         <button id="lower-case">lowercase</button>
         <button id="upper-case">uppercase</button>
         <button id="case">capitalize</button>
@@ -222,7 +222,7 @@
       outputs.innerHTML = ''
     }
     //outputs whole string
-    const output = v => outputs.innerHTML = v.join(spLineBreak(seper))
+    const output = () => outputs.innerHTML = arrays.join(spLineBreak(seper))
     //add linebreak? AND seperations simbols
     const spLineBreak = () => seper.value + (linebreak.checked ? '<br>' : '')
     //sort array randomly (rewrite arrays)
@@ -249,7 +249,7 @@
     tolowercase.addEventListener('click', () => output(lowerCase()))
     toupercase.addEventListener('click', () => output(uperCase()))
     capitalize.addEventListener('click', () => output(capitalizeCases()))
-    linebreak.addEventListener('click', () => output(inputArray(), showStatsWords(), showStatsLetters()))
+    linebreak.addEventListener('click', () => output(showStatsWords(), showStatsLetters()))
     copyText.addEventListener('mouseup', () => copyTextToClipboard(outputs.innerText))
     output(lowerCase(inputArray()), showStatsWords(), showStatsLetters())
     // multiple dblclick event bind to input elements for clearing them

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="">
+<html lang="en">
 
 <head>
   <meta charset="utf-8">
@@ -10,7 +10,7 @@
   <link rel="mask-icon" href="safari-pinned-tab.svg" color="#5bbad5">
   <meta name="msapplication-TileColor" content="#da532c">
   <meta name="theme-color" content="#ffffff">
-  <title>List keywords control</title>
+  <title>Keywords sorting tool</title>
   <style>
     body {
       font: 16px/1.5 monospace;
@@ -157,14 +157,14 @@
 
     <div class="ms">
       <div class="ms colbg">
-        <h1 class="txt-shadow">Keywords randomize or sorting tool</h1>
+        <h1 class="txt-shadow">Keywords sorting tool</h1>
       </div>
       <div class="fl">
         <label for="input">List</label>
-        <input id="input" class="wi" type="text" value="TEXT1, TEXT2, TEXT3, TEXT4, TEXT5, TEXT6, TEXT777">
+        <input id="input" class="wi" type="text" value="peas,okra,corn,beets,onions,celery,turnips,spinach,peppers,lettuce,carrots,zucchini,tomatoes,radishes,potatoes,eggplant,broccoli,cucumbers,asparagus,cauliflower">
       </div>
       <div>
-        <label for="seper">Seperator</label>
+        <label for="seper">Separator</label>
         <input id="seper" type="text" size="3" value=",">
         <label for="linebreak">Line break</label>
         <input id="linebreak" type="checkbox" checked>
@@ -210,7 +210,7 @@
       e.innerHTML = (toggleBolean ? '(a-b)' : '(b-a)') + ' ' + e.innerHTML.split(" ").pop()
     }
     // set array output filter with regex and trim
-    const inputArray = () => arrays = [...new Set(inputs.value.split(/[^\n[a-zA-Z0-9]+| ,]+/).filter(Boolean).map(
+    const inputArray = () => arrays = [...new Set(inputs.value.toLowerCase().split(/[^\n[a-zA-Z0-9]+| ,]+/).filter(Boolean).map(
       item => item.trim()))]
     // output statistic array length
     const showStatsWords = () => statisticsW.innerHTML = arrays.length
@@ -251,8 +251,7 @@
     capitalize.addEventListener('click', () => output(capitalizeCases()))
     linebreak.addEventListener('click', () => output(inputArray(), showStatsWords(), showStatsLetters()))
     copyText.addEventListener('mouseup', () => copyTextToClipboard(outputs.innerText))
-    output(lowerCase(inputArray()), showStatsWords(), showStatsLetters(), sorted(changed(sorts), sortLenght(changed(
-      sortsLength))))
+    output(lowerCase(inputArray()), showStatsWords(), showStatsLetters())
     // multiple dblclick event bind to input elements for clearing them
     Array.from([seper, inputs]).forEach(elem => elem.addEventListener('dblclick', clear))
 

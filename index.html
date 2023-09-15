@@ -241,7 +241,7 @@
       z = z[0].charAt(0).toUpperCase() + z.slice(1);
       return z
     })
-
+    seper.addEventListener('input', ()=> output())
     inputs.addEventListener('input', () => output(inputArray(), showStatsWords(), showStatsLetters()))
     shuffle.addEventListener('click', () => output(shuffled()))
     sorts.addEventListener('click', e => output(sorted(changed(e))))

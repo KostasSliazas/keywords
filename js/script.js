@@ -66,7 +66,7 @@
   var element = document.createElement("link");
   element.setAttribute("rel", "stylesheet");
   // element.setAttribute("type", "text/css");
-  element.setAttribute("href", "css/style.css");
+  element.setAttribute("href", "css/style.min.css");
   document.getElementsByTagName("head")[0].appendChild(element);
 
   function setStyles() {
@@ -152,10 +152,10 @@
   htmlList.addEventListener("click", () => {
     separator.value = "";
     lineBreak.checked = false;
-    arrays = arrays.map((e) => `<li>${e}</li>\n\r`);
+    arrays = arrays.map((e) => `  <li>${e}</li>\n`);
     output();
     inputArray();
-    outputs.textContent = "<ul>" + outputs.innerHTML + "</ul>";
+    outputs.innerText = "<ul>\n" + outputs.innerHTML + "</ul>";
   });
   copyText.addEventListener("mouseup", () => copyTextToClipboard(outputs.innerText));
   output(lowerCase(inputArray()), showStatsLetters());

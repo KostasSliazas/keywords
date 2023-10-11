@@ -112,6 +112,7 @@ textarea {
   max-height: 16em;
   overflow: hidden;
   overflow-y: scroll;
+  white-space: pre;
 }
 
 #separator {

@@ -153,7 +153,7 @@
     separator.value = "";
     lineBreak.checked = false;
     arrays = arrays.map((e) => `<li>${e}</li>\n\r`);
-    output(lowerCase());
+    output();
     inputArray();
     outputs.textContent = "<ul>" + outputs.innerHTML + "</ul>";
   });
